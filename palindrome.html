@@ -1,0 +1,13 @@
+<html>
+    <body>
+        <script>
+            String.prototype.isPalindrome = function () {
+                var array = [];
+                for(var i = 0; i < this.length; i++){
+                    array.push(this[i]);
+                }
+                return array.reverse().join('').toLowerCase() == this.toLowerCase()
+            }
+        </script>
+    </body>
+</html>
