@@ -159,6 +159,7 @@ define(['backbone', 'models/eventModel'],
                 return event.priority == level;
             });
 
+            this.levels = [];
             this.positionLevel(events, level);
 
         },

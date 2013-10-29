@@ -57,8 +57,8 @@ define(['backbone','collections/eventCollection', 'views/eventView'],
                 // this.layOutDay([{"start":585,"end":594}]);
                 // this.layOutDay([{"start":574,"end":667},{"start":154,"end":483},{"start":478,"end":610},{"start":353,"end":574}]);
                 // this.layOutDay([{"start":119,"end":227},{"start":269,"end":387},{"start":86,"end":176},{"start":650,"end":711},{"start":544,"end":644},{"start":437,"end":518}]);
-                this.layOutDay([{"start":458,"end":565},{"start":315,"end":397},{"start":627,"end":694},{"start":643,"end":720},{"start":526,"end":619},{"start":514,"end":595},{"start":620,"end":700},{"start":92,"end":171},{"start":17,"end":111},{"start":293,"end":387},{"start":41,"end":104}]);
-                // this.testCalendar();
+                // this.layOutDay([{"start":458,"end":565},{"start":315,"end":397},{"start":627,"end":694},{"start":643,"end":720},{"start":526,"end":619},{"start":514,"end":595},{"start":620,"end":700},{"start":92,"end":171},{"start":17,"end":111},{"start":293,"end":387},{"start":41,"end":104}]);
+                this.testCalendar();
 
             },
 
@@ -176,7 +176,7 @@ define(['backbone','collections/eventCollection', 'views/eventView'],
 
             testCalendar: function () {
                 var that = this,
-                    counter = 5,
+                    counter = 1,
                     test = function () {
                         var data = that.getRandomData(counter);
                         
@@ -186,7 +186,7 @@ define(['backbone','collections/eventCollection', 'views/eventView'],
                         counter++;
                         setTimeout(function(){
                             test();
-                        }, 4000);
+                        }, 1000);
                     };
 
                 test();   
