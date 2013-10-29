@@ -49,8 +49,15 @@ define(['backbone','collections/eventCollection', 'views/eventView'],
 
             render: function () {
                 this.renderCalendar();
-                this.layOutDay([{"start":167,"end":474},{"start":198,"end":242},{"start":125,"end":623},{"start":620,"end":658},{"start":304,"end":511},{"start":54,"end":105},{"start":420,"end":515},{"start":315,"end":376},{"start":261,"end":454}]);
+                // this.layOutDay([{"start":620,"end":710},{"start":99,"end":162},{"start":293,"end":584},{"start":658,"end":683},{"start":223,"end":343},{"start":139,"end":212},{"start":13,"end":542},{"start":223,"end":694},{"start":99,"end":611}]);
+                // this.layOutDay([{"start":167,"end":474},{"start":198,"end":242},{"start":125,"end":623},{"start":620,"end":658},{"start":304,"end":511},{"start":54,"end":105},{"start":420,"end":515},{"start":315,"end":376},{"start":261,"end":454}]);
                 // this.layOutDay([{start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670}]);
+                // this.layOutDay([{"start":573,"end":581},{"start":21,"end":148},{"start":320,"end":527},{"start":150,"end":500},{"start":560,"end":643},{"start":332,"end":548},{"start":317,"end":629}])
+                // this.layOutDay([{"start":313,"end":344},{"start":632,"end":678},{"start":577,"end":711},{"start":41,"end":101},{"start":335,"end":561}]);
+                // this.layOutDay([{"start":585,"end":594}]);
+                // this.layOutDay([{"start":574,"end":667},{"start":154,"end":483},{"start":478,"end":610},{"start":353,"end":574}]);
+                // this.layOutDay([{"start":119,"end":227},{"start":269,"end":387},{"start":86,"end":176},{"start":650,"end":711},{"start":544,"end":644},{"start":437,"end":518}]);
+                this.layOutDay([{"start":458,"end":565},{"start":315,"end":397},{"start":627,"end":694},{"start":643,"end":720},{"start":526,"end":619},{"start":514,"end":595},{"start":620,"end":700},{"start":92,"end":171},{"start":17,"end":111},{"start":293,"end":387},{"start":41,"end":104}]);
                 // this.testCalendar();
 
             },
@@ -125,17 +132,20 @@ define(['backbone','collections/eventCollection', 'views/eventView'],
                 this.eventCollection.each(function(event){
                     // Create, add, and position new events
                     var eventView = new EventView({ model: event }),
-                        eventWidth = baseWidth * event.exposure;
+                        eventWidth;
+
+                    eventWidth = baseWidth * event.exposure;
 
                     eventView.$el.css({
                         top: event.top,
-                        left: (event.priority * eventWidth) + that.options.container.paddingLeft,
+                        left: (event.priority * baseWidth) + that.options.container.paddingLeft,
                         height: event.height
                     });
 
                     // Add some data to the element, for debugging purposes
                     eventView.$el.attr('data-priority', event.priority);
                     eventView.$el.attr('data-swimLane', that.swimLaneCount);
+                    eventView.$el.attr('data-exposure', event.exposure);
 
                     // We need to remove the border widths because they will expand the boxes and we don't want
                     // any overlapping (even a pixel) of events
@@ -166,17 +176,17 @@ define(['backbone','collections/eventCollection', 'views/eventView'],
 
             testCalendar: function () {
                 var that = this,
-                    counter = 25,
+                    counter = 5,
                     test = function () {
                         var data = that.getRandomData(counter);
                         
                         this.layOutDay(data);
-                        // console.log(JSON.stringify(data));
-                        console.log(data.length)
+                        console.log(JSON.stringify(data));
+                        // console.log(data.length)
                         counter++;
                         setTimeout(function(){
                             test();
-                        }, 1000);
+                        }, 4000);
                     };
 
                 test();   
@@ -204,7 +214,7 @@ define(['backbone','collections/eventCollection', 'views/eventView'],
 
                 for(var i = 0; i < eventCount; i++) {
                     start = this.getRandomNumberBetween(0, (11 * 60));
-                    end = this.getRandomNumberBetween(start, (12 * 60));
+                    end = this.getRandomNumberBetween(start + 60, start + 120 > (12 * 60) ? 12 * 60 : start + 120);
                     data.push({
                         start: start,
                         end: end,

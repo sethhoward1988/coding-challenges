@@ -77,32 +77,65 @@ define(['backbone', 'models/eventModel'],
             // if not, increase its exposure to make up for the gap.
             var that = this;
 
-            this.each(function(event){
+            for(var i = 0; i < this.levels.length; i++){
+                // Level deep
+                for(var z = 0; z < this.levels[i].length; z++){
+                    // Event at level
+                    var event = this.levels[i][z],
+                        start = event.get('start'),
+                        end = event.get('end');
 
-                var start = event.get('start');
-                var end = event.get('end');
 
-                // Grab all event in the next priority...
-                var borderingEvents = that.levels[event.priority];
-
-                if(borderingEvents.length){
-                    // Check to see if any event collides with my event
-                    var border = _.filter(borderingEvents, function (border) {
-                        return border.get('end') > start && border.get('end') < end;
+                    var borderingEvents = _.filter(this.levels[i+1], function(border){
+                        return that.checkBorders(border, start, end);
                     });
 
-                    if(border.length == 0){
-                        // This means there are no events to our events immediate right
-                        if(event.priority != that.swimLaneCount - 1){
-                            // There is some slack space, set exposure to fill it
-                            event.exposure = (that.swimLaneCount) - event.priority;
-                        }
-                    }
-                }
+                    console.log(i,z, borderingEvents);
+                    if(borderingEvents.length == 0){
+                        // There's nothing to the immediate right, but may be something further down restricting our size,
+                        // we need to keep checking for more things to the further right.
 
-            });
+                        // Special case, second to last one...
+                        if(i + 2 == this.levels.length){
+                            event.exposure = 2;
+                        } else {
+                            for(var x = i + 2; x < this.levels.length; x++ ){
+                                borderingEvents = _.filter(this.levels[x], function(border){
+                                    return that.checkBorders(border, start, end);
+                                });
+
+                                if(borderingEvents.length > 0 || x == this.swimLaneCount - 1){
+                                    if(x >= this.swimLaneCount - 1){
+                                        event.exposure = borderingEvents.length ? this.swimLaneCount - event.priority - 1 : this.swimLaneCount - event.priority;    
+                                    } else {
+                                        event.exposure = x - i;
+                                    }
+                                    break;
+                                }
+                            }
+                        }                        
+                    }
+
+                    // Fixes a bug
+                    if(event.exposure + event.priority > this.swimLaneCount){
+                        console.log('uh oh')
+                        // event.exposure = this.swimLaneCount - event.priority;
+                    }
+
+                }
+            }
         },
 
+        checkBorders: function (border, start, end) {
+            var borderStart = border.get('start'),
+                borderEnd = border.get('end');
+
+            return  (borderEnd > start && borderEnd < end) ||
+                    (borderStart > start && borderStart < end) ||
+                    (borderStart < start && borderEnd > end) ||
+                    borderStart == start ||
+                    borderEnd == end;
+        },
 
         // The goal of this function is figure out what events are overlapping, set all of the events proper heights
         // and starting positions (height and top), and then organize the events into swim lanes so none are overlapping 
