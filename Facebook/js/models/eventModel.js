@@ -6,7 +6,9 @@ define(['backbone'],
         var Event = Backbone.Model.extend({
 
             initialize: function () {
-                
+                this.priority = 0;
+                this.isPositioned = false;
+                this.exposure = 1;
             },
 
             parse: function (data) {
