@@ -14,6 +14,9 @@ define(['backbone','collections/eventCollection', 'views/eventView'],
                     paddingRight: 10
                 },
 
+                eventHorizontalBorder: 5,
+                eventVerticalBorder: 2,
+
                 startTime: 900,
                 endTime: 2100
             },
@@ -38,7 +41,48 @@ define(['backbone','collections/eventCollection', 'views/eventView'],
 
             render: function () {
                 this.renderCalendar();
-                this.layOutDay([{start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670}]);
+                this.layOutDay([{"start":167,"end":474},{"start":198,"end":242},{"start":125,"end":623},{"start":620,"end":658},{"start":304,"end":511},{"start":54,"end":105},{"start":420,"end":515},{"start":315,"end":376},{"start":261,"end":454}]);
+                //this.layOutDay([{start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670}]);
+                // this.testCalendar();
+
+            },
+
+            testCalendar: function () {
+                var that = this;
+                var counter = 1;
+
+                var test = function () {
+                    var data = that.getRandomData(counter);
+                    this.layOutDay(data);
+                    console.log(JSON.stringify(data));
+                    counter++;
+                    setTimeout(function(){
+                        test();
+                    }, 2000)    
+                } 
+                setTimeout(function(){
+                    test();
+                }, 2000)    
+            },
+
+            // Testing mechanism to return random data
+            getRandomData: function (eventCount) {
+                var data = [];
+
+                for(var i = 0; i < eventCount; i++) {
+                    var start = this.getRandomNumberBetween(0, (11 * 60));
+                    var end = this.getRandomNumberBetween(start, (12 * 60));
+                    data.push({
+                        start: start,
+                        end: end,
+                    });
+                }
+
+                return data;
+            },
+
+            getRandomNumberBetween: function (min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
             },
 
             layOutDay: function (events) {
@@ -55,13 +99,17 @@ define(['backbone','collections/eventCollection', 'views/eventView'],
                 var that = this;
                 // Clear out existing events
                 this.container.empty();
+                
                 this.eventCollection.each(function(event){
                     // Create, add, and position new events
                     var eventView = new EventView({ model: event });
+                    var eventWidth = that.options.container.width / event.swimLaneCount;
                     eventView.$el.css({
                         top: event.top,
-                        left: event.left
+                        left: (event.priority * eventWidth) + that.options.container.paddingLeft,
+                        height: event.height
                     });
+                    eventView.$el.find('.event-content').width(eventWidth - that.options.eventHorizontalBorder);
                     that.container.append(eventView.$el);
                 });
             },
