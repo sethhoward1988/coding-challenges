@@ -22,10 +22,10 @@ define(['backbone'],
             render: function () {
                 // Render the event element
                 var el = this.eventTemplate({
-                    title: this.model.get('title') ? this.model.get('title') : 'Sample Item',
-                    locale: this.model.get('locale') ? this.model.get('locale') : 'Sample Location',
-                    description: this.model.get('description') ? this.model.get('description') : ''
-                });
+                        title: this.model.get('title') ? this.model.get('title') : 'Sample Item',
+                        locale: this.model.get('locale') ? this.model.get('locale') : 'Sample Location',
+                        description: this.model.get('description') ? this.model.get('description') : ''
+                    });
 
                 this.$el.append(el);
 

@@ -10,24 +10,46 @@ define(['backbone', 'models/eventModel'],
             this.levels = [];
         },
 
+        // The goal of this function is figure out what events are overlapping, set all of the events proper heights
+        // and starting positions (height and top), and then organize the events into swim lanes so none are overlapping 
+        analyzeCollection: function (calendarOptions) {
+            var level = 0,
+                that = this,
+                events;
+            
+            this.calendarOptions = calendarOptions;
+            this.minutesInCalendar = this.getMinutesInCalendar(calendarOptions.startTime, calendarOptions.endTime);
+            this.heightPerMinute = calendarOptions.container.height / this.minutesInCalendar;
+
+            events = this.filter(function(event){
+                return event.priority == level;
+            });
+
+            this.levels = [];
+            this.positionLevel(events, level);
+
+        },
+
         positionLevel: function (events, level) {
-            var earliestTime = 0;
+            var earliestTime = 0,
+                filteredEvents, eventInScope, overlappingEvents;
+
             this.levels[level] = []
 
             // filter the events for only events at current level and aren't positioned yet
-            var filteredEvents = _.filter(events, function (event) {
+            filteredEvents = _.filter(events, function (event) {
                 return event.priority == level && !event.isPositioned;
             })
 
             while(filteredEvents.length){
 
                 // Grab earliest event at this level
-                var eventInScope = _.min(filteredEvents, function (event) {
+                eventInScope = _.min(filteredEvents, function (event) {
                     return event.get('start');
                 });
 
                 // Find overlapping events
-                var overlappingEvents = _.filter(filteredEvents, function (event) {
+                overlappingEvents = _.filter(filteredEvents, function (event) {
                     return  event.get('start') >= eventInScope.get('start') 
                             && event.get('start') <= eventInScope.get('end')
                             && event.cid != eventInScope.cid;
@@ -38,8 +60,10 @@ define(['backbone', 'models/eventModel'],
                     event.priority += 1;
                 });
 
-                // Set current event to positioned
+                // Set current event to positioned as well as height and top of event
                 eventInScope.isPositioned = true;
+                eventInScope.height = (Math.round((eventInScope.get('end') - eventInScope.get('start')) * this.heightPerMinute)) - this.calendarOptions.eventVerticalBorder;
+                eventInScope.top = Math.round(this.heightPerMinute * eventInScope.get('start'));
 
                 // Push the event to the right level matrix, to optimizing searching through levels later
                 this.levels[level].push(eventInScope);
@@ -48,7 +72,7 @@ define(['backbone', 'models/eventModel'],
                 earliestTime = eventInScope.get('end');
 
                 // refilter the events and repeat the process til there are none
-                var filteredEvents = _.filter(events, function (event) {
+                filteredEvents = _.filter(events, function (event) {
                     return event.priority == level && !event.isPositioned;
                 });
             }
@@ -71,7 +95,7 @@ define(['backbone', 'models/eventModel'],
 
         setExposures: function () {
             // Some elements are the furthest right, but have empty space to the right of them.
-            // We need to increase their exposure to fill the empty space on the calendar
+            // We need to increase their size to fill the empty space on the calendar
             // Let's look through every event, and check if there is an event to its immediate right,
             // if there is, skip it. If not, check to see if its priority is equal to the number of swim lanes,
             // if not, increase its exposure to make up for the gap.
@@ -83,14 +107,11 @@ define(['backbone', 'models/eventModel'],
                     // Event at level
                     var event = this.levels[i][z],
                         start = event.get('start'),
-                        end = event.get('end');
+                        end = event.get('end'),
+                        borderingEvents = _.filter(this.levels[i+1], function(border){
+                            return that.checkBorders(border, start, end);
+                        });
 
-
-                    var borderingEvents = _.filter(this.levels[i+1], function(border){
-                        return that.checkBorders(border, start, end);
-                    });
-
-                    console.log(i,z, borderingEvents);
                     if(borderingEvents.length == 0){
                         // There's nothing to the immediate right, but may be something further down restricting our size,
                         // we need to keep checking for more things to the further right.
@@ -115,13 +136,6 @@ define(['backbone', 'models/eventModel'],
                             }
                         }                        
                     }
-
-                    // Fixes a bug
-                    if(event.exposure + event.priority > this.swimLaneCount){
-                        console.log('uh oh')
-                        // event.exposure = this.swimLaneCount - event.priority;
-                    }
-
                 }
             }
         },
@@ -135,33 +149,6 @@ define(['backbone', 'models/eventModel'],
                     (borderStart < start && borderEnd > end) ||
                     borderStart == start ||
                     borderEnd == end;
-        },
-
-        // The goal of this function is figure out what events are overlapping, set all of the events proper heights
-        // and starting positions (height and top), and then organize the events into swim lanes so none are overlapping 
-        analyzeCollection: function (calendarOptions) {
-            this.calendarOptions = calendarOptions;
-            this.minutesInCalendar = this.getMinutesInCalendar(calendarOptions.startTime, calendarOptions.endTime); 
-
-            var heightPerMinute,
-                that = this;
-
-            heightPerMinute = calendarOptions.container.height / this.minutesInCalendar;            
-            
-            this.each(function (event) {
-                event.height = (Math.round((event.get('end') - event.get('start')) * heightPerMinute)) - calendarOptions.eventVerticalBorder;
-                event.top = Math.round(heightPerMinute * event.get('start'));
-            });
-            
-            var level = 0;
-
-            var events = this.filter(function(event){
-                return event.priority == level;
-            });
-
-            this.levels = [];
-            this.positionLevel(events, level);
-
         },
 
         getSwimLaneCount: function () {

@@ -93,7 +93,7 @@ body {
     border-left: none;
     display: inline-block;
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .event .title {
