@@ -47,11 +47,12 @@ define(['backbone','collections/eventCollection', 'views/eventView'],
                 }
                 this.eventCollection.reset(events);
                 // Analyze the collection to get proper positioning for events
-                this.eventCollection.analyzeCollection(this.options.container);
+                this.eventCollection.analyzeCollection(this.options);
                 this.renderEvents();
             },
 
             renderEvents: function () {
+                var that = this;
                 // Clear out existing events
                 this.container.empty();
                 this.eventCollection.each(function(event){
@@ -61,7 +62,7 @@ define(['backbone','collections/eventCollection', 'views/eventView'],
                         top: event.top,
                         left: event.left
                     });
-                    this.container.append(eventView);
+                    that.container.append(eventView.$el);
                 });
             },
 
@@ -82,7 +83,7 @@ define(['backbone','collections/eventCollection', 'views/eventView'],
 
                 this.renderAxis();
                 this.$el.append(this.axis);
-                this.$el.append(this.options);
+                this.$el.append(this.container);
 
             },
 
