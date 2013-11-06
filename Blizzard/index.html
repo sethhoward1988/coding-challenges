@@ -3,11 +3,12 @@
         <title>Blizzard Challenge</title>
         <link rel="stylesheet" href="css/styles.css" />
         <script src="js/menu.json"></script>
+        <script src="js/menu.js"></script>
     </head>
     <body>
         <script>
-            var menu = new Menu();
-            //document.body.appendChild(menu.el);
+            var menu = new Menu(json);
+            document.body.appendChild(menu.el);
         </script>
     </body>
 </html>
