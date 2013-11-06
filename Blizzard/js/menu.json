@@ -1,0 +1,350 @@
+{
+    "menu": [
+        {
+            "title": "Terran",
+            "submenu": [
+                { 
+                    "title": "Supply Depot"
+                },
+                { 
+                    "title": "Command Center",
+                    "submenu": [
+                        { 
+                            "title": "SCV" 
+                        },
+                        { 
+                            "title": "Orbital Command"
+                        },
+                        { 
+                            "title": "Planetary Fortress"
+                        }
+                    ]
+                },
+                {
+                    "title": "Barracks",
+                    "submenu": [
+                        { 
+                            "title": "Marine"
+                        },
+                        { 
+                            "title": "Marauder"
+                        },
+                        {
+                            "title": "Reaper"
+                        },
+                        {
+                            "title": "Ghost"
+                        }
+                    ]
+                },
+                {
+                    "title": "Engineering Bay"
+                },
+                {
+                    "title": "Refinery"
+                },
+                {
+                    "title": "Missle Turret"
+                },
+                {
+                    "title": "Sensor Tower"
+                },
+                {
+                    "title": "Factory",
+                    "submenu": [
+                        {
+                            "title": "Hellion"
+                        },
+                        {
+                            "title": "Siege Tank"
+                        },
+                        {
+                            "title": "Widow Mine"
+                        },
+                        {
+                            "title": "Hellbat"
+                        },
+                        {
+                            "title": "Thor"
+                        }
+                    ]
+                },
+                {
+                    "title": "Ghost Academy"
+                },
+                {
+                    "title": "Bunker"
+                },
+                {
+                    "title": "Starport",
+                    "submenu": [
+                        {
+                            "title": "Viking"
+                        },
+                        {
+                            "title": "Medivac"
+                        },
+                        {
+                            "title": "Raven"
+                        },
+                        {
+                            "title": "Banshee"
+                        },
+                        {
+                            "title": "Battlecruiser"
+                        }
+                    ]
+                },
+                {
+                    "title": "Armory"
+                },
+                {
+                    "title": "Fusion Core"
+                }
+            ]
+        },
+        {
+            "title": "Protoss",
+            "submenu": [
+                {
+                    "title": "Nexus",
+                    "submenu": [
+                        {
+                            "title": "Probe"
+                        },
+                        {
+                            "title": "Mothership Core"
+                        }
+                    ]
+                },
+                {
+                    "title": "Pylon"
+                },
+                {
+                    "title": "Assimilator"
+                },
+                {
+                    "title": "Gateway",
+                    "submenu": [
+                        {
+                            "title": "Zealot"
+                        },
+                        {
+                            "title": "Sentry"
+                        },
+                        {
+                            "title": "Stalker"
+                        },
+                        {
+                            "title": "High Templar"
+                        },
+                        {
+                            "title": "Dark Templar"
+                        }
+                    ]
+                },
+                {
+                    "title": "Warp Gate"
+                },
+                {
+                    "title": "Forge"
+                },
+                {
+                    "title": "Cybernetics Core"
+                },
+                {
+                    "title": "Photon Cannon"
+                },
+                {
+                    "title": "Stargate",
+                    "submenu": [
+                        {
+                            "title": "Phoenix"
+                        },
+                        {
+                            "title": "Oracle"
+                        },
+                        {
+                            "title": "Void Ray"
+                        },
+                        {
+                            "title": "Tempest"
+                        },
+                        {
+                            "title": "Carrier"
+                        }
+                    ]
+                },
+                {
+                    "title": "Robotics Facility",
+                    "submenu": [
+                        {
+                            "title": "Observer"
+                        },
+                        {
+                            "title": "Warp Prism"
+                        },
+                        {
+                            "title": "Immortal"
+                        },
+                        {
+                            "title": "Colossus"
+                        }
+                    ]
+                },
+                {
+                    "title": "Twilight Council"
+                },
+                {
+                    "title": "Fleet Beacon"
+                },
+                {
+                    "title": "Robotics Bay"
+                },
+                {
+                    "title": "Templar Archives"
+                },
+                {
+                    "title": "Dark Shrine"
+                }
+            ]
+        },
+        {
+            "title": "Zerg",
+            "submenu": [
+                {
+                    "title": "Hatchery",
+                    "submenu": [
+                        {
+                            "title": "Larva"
+                        },
+                        {
+                            "title": "Drone"
+                        },
+                        {
+                            "title": "Overlord"
+                        }
+                    ]
+                },
+                {
+                    "title": "Spawning Pool",
+                    "submenu": [
+                        {
+                            "title": "Zergling"
+                        },
+                        {
+                            "title": "Queen"
+                        }
+                    ]
+                },
+                {
+                    "title": "Evolution Chamber"
+                },
+                {
+                    "title": "Extractor"
+                },
+                {
+                    "title": "Lair",
+                    "submenu": [
+                        {
+                            "title": "Overseer"
+                        }
+                    ]
+                },
+                {
+                    "title": "Roach Warren",
+                    "submenu": [
+                        {
+                            "title": "Roach"
+                        }
+                    ]
+                },
+                {
+                    "title":"Baneling Nest",
+                    "submenu": [
+                        {
+                            "title": "Baneling"
+                        }
+                    ]
+                },
+                {
+                    "title": "Spine Crawler"
+                },
+                {
+                    "title": "Spore Crawler"
+                },
+                {
+                    "title": "Infestation Pit",
+                    "submenu": [
+                        {
+                            "title": "Infestor"
+                        },
+                        {
+                            "title": "Swarm Host"
+                        }
+                    ]
+                },
+                {
+                    "title": "Hydralisk Den",
+                    "submenu": [
+                        {
+                            "title": "Hydralisk"
+                        }
+                    ]
+                },
+                {
+                    "title": "Spire",
+                    "submenu": [
+                        {
+                            "title": "Mutalisk"
+                        },
+                        {
+                            "title": "Corruptor"
+                        }
+                    ]
+                },
+                {
+                    "title": "Nydus Network",
+                    "submenu": [
+                        {
+                            "title": "Nydus Worm"
+                        }
+                    ]
+                },
+                {
+                    "title": "Hive",
+                    "submenu": [
+                        {
+                            "title": "Viper"
+                        }
+                    ]
+                },
+                {
+                    "title": "Ultralisk Cavern",
+                    "submenu": [
+                        {
+                            "title": "Ultralisk"
+                        }
+                    ]
+                },
+                {
+                    "title": "Greater Spire",
+                    "submenu": [
+                        {
+                            "title": "Brood Lord"
+                        }
+                    ]
+                }
+            ]
+        },
+        { 
+            "title": "Community"
+        },
+        {
+            "title": "Support"
+        },
+        {
+            "title": "Forums"
+        }
+    ]
+}
