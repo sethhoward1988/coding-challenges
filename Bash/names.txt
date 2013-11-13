@@ -1,0 +1,11 @@
+Ann:A
+Bob:C
+Cindy:B
+Dean:F
+Emily:A
+Frank:C
+Ginger:D
+Hal:B
+Ivy:A
+Justin:F
+Karen:D
