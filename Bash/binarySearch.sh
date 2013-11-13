@@ -13,7 +13,6 @@ done < $1
 
 function binarySearch {
     local value=$1
-
     local startIndex=0
     local len=${#array[*]}
     local stopIndex=$[len-1]
@@ -40,7 +39,6 @@ function binarySearch {
     main
 
     exit
-
 }
 
 function main {
