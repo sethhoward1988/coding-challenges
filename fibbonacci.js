@@ -1,5 +1,13 @@
-// Fibbonacci Series
+// Fibbonacci Recursive
+function fib(n) {
+    if (n == 0 || n == 1) {
+      return n;
+    } else {
+      return fib(n - 1) + fib(n - 2);
+    }
+}
 
+// Fibbonacci Series with low memory usage
 function fib(n) {
     var counter = 0,
         previous = [0,1];
@@ -11,7 +19,6 @@ function fib(n) {
     }
 
     return previous[0];
-
 }
 
 // Time Complexity
@@ -42,7 +49,5 @@ function fib(n) {
         previous.shift();
         counter++;
     }
-
     return previous[0];
-
 }
