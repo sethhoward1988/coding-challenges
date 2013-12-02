@@ -1,0 +1,99 @@
+<!-- // Reverse a String -->
+
+
+
+
+
+<script>
+    function reverse(string){
+        var result = [],
+            length = string.length;
+
+        for(var i = length; i >= 0; i--){
+            result.push(string[i]);
+        }
+
+        return result.join('');
+    }
+
+    // O(n)
+
+// function reverse(string){
+//     var length = string.length;
+//     var pivot = Math.floor(string.length / 2);
+
+//     for(var i = 0; i <= pivot; i++){
+//         string = swap(string, i, length - i - 1);
+//     }
+
+//     return string;
+// }
+
+// function swap(string, a, b){
+//     var temp = string[a];
+//     string[a] = string[b]
+//     string[b] = temp;
+//     return string;
+// }
+
+
+// Ideally you would memoize this
+memo = [0,1];
+
+function fib(n) {
+    var counter;
+
+    if(memo[n]){
+        console.log('Short Circuiting');
+        return memo[n];
+    } else {
+        // If we don't have it, pick up from the last one we do have
+        counter = memo.length - 1;
+    }
+    
+    while(counter < n){
+        var nthResult = memo[counter - 1] + memo[counter];
+        memo.push(nthResult)
+        counter++;
+    }
+
+    return memo[n];
+
+}
+
+</script>
+
+<script>
+ // Print out the grade-school multiplication table up to 12x12
+
+function timesTable(n) {
+    if(n > 12){
+        return;
+    }
+
+    for(var i = 1; i <= n; i++){
+        var row = '';
+        for(var z = 1; z <= n; z++){
+            row += ' ' + i * z;
+        }
+        console.log(row)
+    }
+}
+
+// Write function to print the odd numbers from 1 to 99.
+
+function printOdd(max) {
+    var counter = 1;
+    var iterations = 0;
+    while(counter <= max){
+        console.log(counter);
+        counter += 2;
+        iterations++;
+    }
+    console.log(iterations);
+}
+
+// O(n/2)
+
+
+</script>

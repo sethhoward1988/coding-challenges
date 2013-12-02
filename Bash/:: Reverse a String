@@ -1,0 +1,36 @@
+// Reverse a String
+
+function reverse(string){
+    var result = [],
+        length = string.length;
+
+    for(var i = length; i >= 0; i--){
+        result.push(string[i]);
+    }
+
+    return result.join('');
+}
+
+O(n)
+
+<script>
+
+function reverse(string){
+    var length = string.length;
+    var pivot = Math.floor(string.length / 2);
+
+    for(var i = 0; i >= pivot; i++){
+        string = swap(string, i, length - i);
+    }
+
+    return string;
+}
+
+function swap(string, a, b){
+    var temp = string[a];
+    string[a] = b
+    string[b] = temp;
+    return string;
+}
+
+</script>

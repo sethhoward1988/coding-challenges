@@ -1,0 +1,52 @@
+<html>
+<head>
+    <script src="e.js"></script>
+</head>
+<body>
+<script>
+    Number.prototype.isPrime = function () {
+        var string = this.toString();
+        var len = string.length;
+
+        var ending = string[len - 1];
+
+        if(ending == '1' || ending == '3' || ending == '7' || ending == '9'){
+            console.log('Testing ', +this);
+            for(var i = 3; i < this; i++){
+                if(this % i == 0){
+                    console.log('Not a prime...(in loop) at ' + i, +this);
+                    return false;
+                }
+            }
+            console.log('Prime number located ', +this);
+            return true
+        }
+        console.log('Not a prime...', +this);
+        return false;
+    }
+
+    function isInteger (number) {
+        var intRegex = /^\d+$/;
+        if(intRegex.test(number)) {
+           return true;
+        }
+        return false;
+    }
+
+    function iterateOverE () {
+        var length = e.length;
+        var end = 10;
+        for(var i = 0; i < length; i++){
+            var test = e.slice(i, end);
+            var resp = Number(test).isPrime();
+            if(resp){
+                break;
+            }
+            end++;
+        }
+    }
+
+
+</script>
+</body>
+</html>

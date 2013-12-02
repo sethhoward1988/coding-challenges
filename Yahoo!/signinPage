@@ -1,0 +1,96 @@
+<DOCTYPE!>
+<html>
+    <head>
+        <title>Login</title>
+        <style>
+            body {
+                padding:0;
+                margin: 0 auto;
+            }
+
+
+            .content {
+                max-width: 1080px;
+            }
+
+
+
+            .header {
+                 background-image: url('logo.png');
+                 height: 100px;
+                 width:100px;
+            }
+
+            .login-pane {
+                margin:0 auto;
+                text-align: center;
+                width: 300px;
+            }
+
+            label {
+                width: 100px;
+            }
+
+            label, input.field{
+                display: inline-block;
+            }
+
+            .login-pane input.field {
+                width: 150px;
+            }
+
+            legend {
+                display: none;
+                visibility: none;
+            }
+
+            .login-pane .button {
+                float: right;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="content" style="">
+            <div class="header">
+                <img src="logo.png" alt="company logo" />
+            </div>
+            <div class="login-pane">
+                <form id="loginForm" action="/login" type="POST">
+                    <fieldset>
+                        <legend>Sign-in</legend>
+                        <div>
+                            <label for="username">Username:</label>
+                            <input class="field username" type="text" name="username" placeholder="Username" />
+                        </div>
+                        <label for="password">Password:</label>
+                        <input class="field password" type="password" name="password" placeholder="Password" />
+                        <br />
+                        <input type="submit" value="submit" class="button" />
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <script>
+            $(function () {
+                $('#loginForm').on('submit', function (evt) {
+                    validateLogin();
+                });
+            });
+               
+            function validateLogin () {
+                var username = $(this).find('.field.username').val(),
+                    password = $(this).find('.field.password').val();
+                
+                if( isEmpty(username) || isEmpty(password) ){
+                    evt.preventDefault();
+                    alert("Please fix your login credentials");
+                    $(this).focus();
+                }
+            }
+
+            function isEmpty(string) {
+                return !string.length;
+            }
+        </script>
+    </body>
+</html>
