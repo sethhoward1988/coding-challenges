@@ -1,0 +1,85 @@
+DP Example
+
+Subtract 1
+Divide by 2
+Divide by 3
+
+<script>
+
+var DP = function () {
+    this.memo = [0,0];
+}
+
+DP.prototype = {
+    minSteps: function (n) {
+            
+        if(n==1){
+            return 0;
+        } 
+
+        if(this.memo[n]){
+            return this.memo[n];
+        }
+
+        var r = 1 + this.minSteps(n-1);
+
+        if(n%2 == 0){
+            r = this.min(r, 1 + this.minSteps(n/2));
+        }
+
+        if(n%3 == 0){
+            r = this.min(r, 1 + this.minSteps(n/3));
+        }
+
+        if(isNaN(r)){
+            console.log('error...')
+        }
+
+        this.memo[n] = r;
+
+        return r;
+    },
+
+    min: function (a, b) {
+        if(a < b){
+            return a;
+        }
+        return b;
+    }
+}
+
+dp = new DP;
+
+
+
+var BottomUpDP = function () {
+    this.dp = [0,0];
+}
+
+BottomUpDP.prototype = {
+
+    getMinSteps: function (n) {
+        
+        for(var i = 2; i <= n; i++){
+            this.dp[i] = 1 + this.dp[i - 1];
+            if(i%2 == 0){
+                this.dp[i] = this.min(this.dp[i], 1 + this.dp[i/2]);
+            }
+            if(i%3 == 0){
+                this.dp[i] = this.min(this.dp[i], 1 + this.dp[i/3]);
+            }
+        }
+        return this.dp[n]
+    },
+
+    min: function (a, b) {
+        if(a < b){
+            return a;
+        }
+        return b;
+    }
+}
+
+bottomUpDP = new BottomUpDP;
+
+</script>
