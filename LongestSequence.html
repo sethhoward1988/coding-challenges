@@ -1,0 +1,54 @@
+<script>
+//Longest Increasing Subsequence
+
+LS = function () {
+    LS = [];
+}
+
+LS.prototype = {
+    // longestSequence: function (array) {
+    //     LS = [];
+    //     largest = 1;
+    //     for(var i = 0, len = array.length; i < len - 1; i++){
+    //         LS[i] = 1;
+    //         for(var j = 0; j < i -1; j++){
+    //             if(array[i] > array[j]){
+    //                 LS[i] = LS[j] + 1;
+    //             }
+    //         }
+    //     }
+
+    //     for(var i = 0, len = array.length; i < len - 1; i++){
+    //         if(largest < LS[i]){
+    //             largest = LS[i];
+    //         }
+    //     }
+    //     console.log(LS);
+    //     return largest;
+    // }
+
+    longestSequence: function (array) {
+        ls = [1];
+        var longest = 0;
+
+        for(var i = 1, len = array.length; i < len; i++){
+            ls[i] = 1;
+            if(array[i] > array[i-1]){
+                ls[i] = ls[i-1] + 1;
+                if(ls[i] > longest){
+                    longest = ls[i];
+                }
+            }
+        }
+
+        console.log(ls);
+        return longest;
+
+    }
+
+}
+
+var sequence = [4,6,8,5,3,5,6,8,9,2,5,3,6,7,54,8,9,23,1,4,5,6,7,8,9,7,5,4,6,7,8,6,4,6,7,8,0];
+ls = new LS;
+
+</script>

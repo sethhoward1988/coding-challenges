@@ -1,0 +1,48 @@
+<html>
+<head>
+    <title>Scrabble!</title>
+    <script src="words.js"></script>
+    <script src="scrabble.js"></script>
+    <link href="style.css" rel="stylesheet"></link>
+</head>
+<body>
+    <label>Type your letter tray</label>
+    <input id="tray" type="text"></input> Ex. "wgdasxzcyteiob"
+    <input id="submitButton" type="submit" value="Check Words">
+    <div class="Solution">
+        <h1>Best Solution(s) are...</h1>
+        <div id="solution"></div>
+    </div>
+    <div class="other-answers">
+        <h1>Other answer(s) are...</h1>
+        <div id="otherAnswers"></div>
+    </div>
+    <br />
+    <br />
+    Word list was pulled from <a href="http://wordsmith.org/awad/wordlist.html">A Word A Day</a>
+    <script>
+        scrabbleGame = new Scrabble(words);
+
+        var submit = document.getElementById('submitButton');
+        var tray = document.getElementById('tray')
+        var otherAnswers = document.getElementById('otherAnswers');
+        var solution = document.getElementById('solution');
+
+        submit.addEventListener('click', function() {
+            var data = scrabbleGame.findWords(tray.value.split(''));
+            solution.innerHTML = '';
+            otherAnswers.innerHTML = '';
+
+            for(var i = 0, len = data.solutions.length; i < len; i++){
+                solution.innerHTML += solution.innerHTML == '' ? data.solutions[i] : ', ' + data.solutions[i];
+            }
+
+            for(var i = 0, len = data.all.length; i < len; i++){
+                otherAnswers.innerHTML += otherAnswers.innerHTML == '' ? data.all[i] : ', ' + data.all[i];
+            }            
+
+        });
+    </script>
+    <div class="footer">Prepared for Google</div>
+</body>
+</html>
