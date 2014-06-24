@@ -1,0 +1,150 @@
+<html>
+    <script>
+        
+        // Problem # 1 - Created it to be dynamic for any amount of players
+        // http://community.topcoder.com/stat?c=problem_statement&pm=6767
+        function score () {
+            var tally = {}, results = {}, resultString = '';
+            var analyzeList = function (list, player) {
+                list.forEach(function(word){
+                    if(tally[word]){
+                        tally[word].count++;
+                        tally[word].players.push(player);
+                    } else {
+                        tally[word] = {
+                            count: 1,
+                            players: [player]
+                        }
+                    }
+                });
+            };
+            Array.prototype.forEach.call(arguments, function(list, index){
+                analyzeList(list, index);
+            });
+            for(word in tally){
+                var points = (arguments.length + 1) - tally[word].count;
+                tally[word].players.forEach(function(player){
+                    if(!results[player]){
+                        results[player] = { score: 0 }
+                    }
+                    results[player].score += points;
+                });
+            }
+            for(player in results){
+                resultString += '/' + results[player].score;
+            }
+            return resultString.substring(1);
+        }
+
+
+
+
+
+
+
+
+
+
+        // Problem # 2
+        // http://community.topcoder.com/stat?c=problem_statement&pm=4483
+        function decode (string, position, length) {
+            if(position.length){
+                var drome = function (string, pos, len) {
+                    return Array.prototype.reverse.apply(string.substring(pos, len + pos).split('')).join('');
+                }(string, position[0], length[0]);
+                var splitPosition = position.splice(0,1)[0] + length.splice(0,1)[0];
+                return decode([string.slice(0, splitPosition), drome, string.slice(splitPosition)].join(''), position, length);
+            } else {
+                return string;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+        // Problem # 3
+        // O(n^2)
+        // http://community.topcoder.com/stat?c=problem_statement&pm=10275
+        function cellsLeft (array, deletedCell) {
+            var tree = {}, cellCount = 0, index = 0, value = array[index];
+
+            while(value != -1){
+                index = array[value];
+                value = array[index];
+            }
+
+            nodeBuilder(array, index, tree);
+
+            function nodeBuilder (array, index, node) {
+                if(index == deletedCell){
+                    // Poor dead cell :(
+                    return;
+                }
+
+                var newNode = {}, childrenCells = [];
+                node[index] = newNode
+
+                // Sub optimal (should build a custom data structure to speed this up)
+                // Probably iterate over each one once and save their index and value,
+                // then be able to binary search for a value instead of this iterative approach
+                array.forEach(function(cell, ind){
+                    if(cell == index)
+                    childrenCells.push(ind);
+                });
+
+                if(childrenCells.length){
+                    for(var i = 0; i < childrenCells.length; i++){
+                        nodeBuilder(array, childrenCells[i], newNode)
+                    };
+                } else {
+                    cellCount++;
+                }
+            }
+
+            return cellCount;
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Test Cases
+        console.log('P1 - Test 1', score(['cat','dog','pig','mouse'],['cat','pig'],['dog','cat']) == '8/3/3');
+        console.log('P1 - Test 2', score(['mouse'],['cat','pig'],['dog','cat']) == '3/5/5');
+        console.log('P1 - Test 3', score(['dog','mouse'],['dog','pig'],['dog','cat']) == '4/4/4');
+        console.log('P1 - Test 4', score(["bcdbb","aaccd","dacbc","bcbda","cdedc","bbaaa","aecae"],["bcdbb","ddacb","aaccd","adcab","edbee","aecae","bcbda"],["dcaab","aadbe","bbaaa","ebeec","eaecb","bcbba","aecae","adcab","bcbda"]) == '14/14/21');
+        console.log('P1 - Test 5', score(['cat'],['cat'],['cat'],['cat'],['dog']));
+
+        console.log('P2 - Test 1', decode('ab', [0], [2]) == 'abba');
+        console.log('P2 - Test 2', decode('Misip', [2,3,1,7], [1,1,2,2]) == 'Mississippi');
+        console.log('P2 - Test 3', decode('XY', [0,0,0,0], [2,4,8,16]) == 'XYYXXYYXXYYXXYYXXYYXXYYXXYYXXYYX');
+        console.log('P2 - Test 4', decode('TC206', [1,2,5], [1,1,1]) == 'TCCC2006');
+        console.log('P2 - Test 5', decode('nodecoding', [], []) == 'nodecoding');
+        
+        console.log('P3 - Test 1', cellsLeft([-1,0,0,1,1], 2) == 2);
+        console.log('P3 - Test 2', cellsLeft([-1,0,0,1,1], 1) == 1);
+        console.log('P3 - Test 3', cellsLeft([-1,0,0,1,1], 0) == 0);
+        console.log('P3 - Test 4', cellsLeft([-1,0,0,2,2,4,4,6,6], 4) == 2);
+        console.log('P3 - Test 5', cellsLeft([26,2,32,36,40,19,43,24,30,13,21,14,24,21,19,4,30,10,44,12,7,32,17,43,35,18,7,36,10,16,5,38,35,4,13,-1,16,26,1,12,2,5,18,40,1,17,38,44,14], 24) == 14);
+    </script>
+</html>
