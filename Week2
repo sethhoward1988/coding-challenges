@@ -1,0 +1,140 @@
+<html>
+	<script>
+		// Problem 1
+		// O(n + k)
+		// http://community.topcoder.com/stat?c=problem_statement&pm=6477
+		function decode (archive, dictionary) {
+			var alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+			var lookup = {}
+			var result = '';
+			var minLength = 50;
+
+			// Build lookup table
+			for (var i = 0; i < dictionary.length; i++) {
+				if(dictionary[i].length < minLength){
+					minLength = dictionary[i].length;
+				}
+				lookup[dictionary[i]] = {
+					character: alphabet[i]
+				}
+			}
+
+			// Decode string
+			while(archive.length){
+				for(var j = minLength; j <= archive.length; j++){
+					var substring = archive.substring(0, j);
+					if(lookup[substring]){
+						result += lookup[substring].character;
+						archive = archive.substring(j);
+						j = archive.length;
+					}
+				}
+
+			}
+
+			return result;
+		}
+
+		
+
+		// Problem 2
+		// http://community.topcoder.com/stat?c=problem_statement&pm=6072
+		function flareOut (snowflake) {
+			return flip(flip(triflip(snowflake), true));
+
+			function triflip (snowflake) {
+				var subTri = [];
+				var columnCount = 1;
+				
+				// Build sub triangle
+				for(var i = 1; i < snowflake.length; i++){
+					subTri.push(snowflake[i].substring(0, columnCount))
+					columnCount++;
+				}
+
+				for(var i = 0; i < snowflake.length; i++){
+					for(var j = i; j < subTri.length; j++){
+						snowflake[i] = snowflake[i] + subTri[j][i];
+					}
+				}
+
+				return snowflake;
+
+			}
+
+			function flip (snowflake, isHorizontal) {
+				var clone = snowflake.slice(0);
+				
+				for(var i = 0; i < clone.length; i++){
+					if(isHorizontal){
+						snowflake[i] = clone[i].split('').reverse('').join('') + snowflake[i];	
+					} else {
+						snowflake.unshift(clone[i]);
+					}
+					
+				}
+
+				return snowflake;
+
+			}
+
+		}
+
+		
+
+
+
+		// Problem 3
+		// http://community.topcoder.com/stat?c=problem_statement&pm=2829
+		function minSums (number, sum) {
+			var answer = number.length;
+			analyze(number, sum, 0);
+			return (answer == number.length ? -1 : answer);
+
+			function analyze (number, sum, additionCount) {
+				if(number == sum){												// Exit condition, if number and sum ever equal
+					answer = (additionCount < answer ? additionCount : answer)	// then we have a viable solution
+				} else {
+					for(var i = 1; i <= number.length; i++){					// Iterate over every number in the num's length
+						var num = parseInt(number.substring(0, i));				// Get the number between 0 and i
+						if(num > sum){											// If it's larger than the sum, enter this loop
+							for(var j = 1; j < i; j++){							// Analyze all possible combinations between i and
+								analyze(number.substring(j,number.length), 		// New number to search for
+										sum - parseInt(number.substring(0,j)), 	// New sum
+										additionCount + 1);						// Increase the count of additions needed
+							}
+							i = number.length; 									// Short circuit outer loop
+						}
+					}
+				}
+			}
+		}
+
+
+
+
+
+		// Tests
+
+		console.log(decode("101101", ["00","10","01","11"]) == 'BDC');
+		console.log(decode("10111010", ["0","111","10"]) == 'CBAC');
+		console.log(decode("0001001100100111001", ["1","0"]) == 'BBBABBAABBABBAAABBA');
+		console.log(decode("111011011000100110", ["010","00","0110","0111","11","100","101"]) == 'EGGFAC');
+		console.log(decode("001101100101100110111101011001011001010", ["110","011","10","0011","00011","111","00010","0010","010","0000"]) == 'DBHABBACAIAIC');
+
+		console.log(flareOut([".","..","*.*"]).join('-') == "*.**.*-......-*....*-*....*-......-*.**.*");
+		console.log(flareOut(["*","..",".*.",".**.",".*.**"]).join('-') == "**.*..*.**-*.**..**.*-.*.*..*.*.-***....***-....**....-....**....-***....***-.*.*..*.*.-*.**..**.*-**.*..*.**");
+		console.log(flareOut([".","..","***"]).join('-') == "******-*....*-*....*-*....*-*....*-******");
+		console.log(flareOut(["*",".*","***"]).join('-') == "******-**..**-*.**.*-*.**.*-**..**-******");
+		console.log(flareOut([".","..","***","...."]).join('-') == "........-.******.-.*....*.-.*....*.-.*....*.-.*....*.-.******.-........");
+
+		console.log(minSums("99999", 45) == 4) 		// 5  iterations
+		console.log(minSums("1110", 3) == 3) 		// 4  iterations
+		console.log(minSums("0123456789", 45) == 8)	// 44 iterations
+		console.log(minSums("99999", 100) == -1)	// 6  iterations
+		console.log(minSums("382834", 100) == 2)	// 14 iterations
+		console.log(minSums("9230560001", 71) == 4)	// 20 iterations
+
+
+	</script>
+</html>
